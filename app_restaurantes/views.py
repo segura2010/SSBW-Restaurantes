@@ -9,6 +9,6 @@ def index(request):
 	return render(request, "base.html", context)
 
 
-def helloworld():
+def helloworld(request):
 
 	return HttpResponse("Hello world!")
