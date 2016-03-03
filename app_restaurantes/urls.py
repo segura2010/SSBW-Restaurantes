@@ -4,7 +4,8 @@ from django.conf.urls import patterns, url
 from app_restaurantes import views
 
 urlpatterns = patterns('',
-	url(r'^index(.+)', views.index, name='index'),
+	url(r'^index', views.index, name='index'),
+	url(r'^login', views.login, name='login'),
 	url(r'^hello', views.helloworld, name='helloworld')
 )
 
