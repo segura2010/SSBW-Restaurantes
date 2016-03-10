@@ -24,10 +24,10 @@
 			<ul class="menu">
 				{% if user.is_authenticated %}
 					<li>Bienvenido {{ user.username }}</li>
-					<li><a href="/accounts/logout">Cerrar Sesión</a></li>
+					<li><a href="{% url 'auth_logout' %}">Cerrar Sesión</a></li>
 				{% else %}
-					<li><a href="/accounts/register">Registrate</a></li>
-					<li><a href="/accounts/login" data-toggle="_logingModal">Inicia Sesión</a></li>
+					<li><a href="{% url 'registration_register' %}">Registrate</a></li>
+					<li><a href="{% url 'auth_login' %}" data-toggle="_logingModal">Inicia Sesión</a></li>
 				{% endif %}
 			</ul>
 		</div>
@@ -60,34 +60,19 @@
 	</div>
 
 	<div class="row column text-center">
-		<h2>Our Newest Products</h2>
+		<h2>Nuevos Restaurantes</h2>
 		<hr>
 	</div>
 	<div class="row small-up-2 large-up-4">
-		<div class="column">
-			<img class="thumbnail" src="http://placehold.it/300x400">
-			<h5>Nulla At Nulla Justo, Eget</h5>
-			<p>$400</p>
-			<a href="#" class="button expanded">Buy</a>
-		</div>
-		<div class="column">
-			<img class="thumbnail" src="http://placehold.it/300x400">
-			<h5>Nulla At Nulla Justo, Eget</h5>
-			<p>$400</p>
-			<a href="#" class="button expanded">Buy</a>
-		</div>
-		<div class="column">
-			<img class="thumbnail" src="http://placehold.it/300x400">
-			<h5>Nulla At Nulla Justo, Eget</h5>
-			<p>$400</p>
-			<a href="#" class="button expanded">Buy</a>
-		</div>
-		<div class="column">
-			<img class="thumbnail" src="http://placehold.it/300x400">
-			<h5>Nulla At Nulla Justo, Eget</h5>
-			<p>$400</p>
-			<a href="#" class="button expanded">Buy</a>
-		</div>
+		{% for r in restaurantes %}
+			<div class="column">
+				<img class="thumbnail" src="http://placehold.it/300x400">
+				<h5>{{ r.nombre }}</h5>
+				<p>Direccion: {{ r.direccion }}</p>
+				<p>Telefono: {{ r.telefono }}</p>
+				<a href="#{{ r.slug }}" class="button expanded">Ver</a>
+			</div>
+		{% endfor %}
 	</div>
 	<hr>
 	<div class="row column">

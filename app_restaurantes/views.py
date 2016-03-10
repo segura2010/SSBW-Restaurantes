@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+# Para acceder a los objetos de la BD
+from app_restaurantes.models import Restaurante
+
 # Create your views here.
 
 def index(request):
 
-	context = {'visitor':'visitor'}
+	# obtener los restaurantes
+	restaurantes = Restaurante.objects.all()[0:4]
+
+	context = {'restaurantes':restaurantes}
 	return render(request, "base.html", context)
 
 def login(request):
