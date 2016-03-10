@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+
+{% block primer_contenido %}
+<div class="row">
+		<div class="medium-centered large-6 large-centered columns">
+			<div class="medium-6 columns">
+				<img class="thumbnail" src="http://placehold.it/300x400">
+			</div>
+			<div class="medium-4 columns">
+				<h1>{{ restaurante.nombre }}</h1>
+				<h5>Direccion: {{ restaurante.direccion }}</h5>
+				<h5>Telefono: {{ restaurante.telefono }}</h5>
+			</div>
+		</div>
+	</div>
+{% endblock %}

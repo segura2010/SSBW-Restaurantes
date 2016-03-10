@@ -9,10 +9,22 @@ from app_restaurantes.models import Restaurante
 def index(request):
 
 	# obtener los restaurantes
-	restaurantes = Restaurante.objects.all()[0:4]
+	restaurantes = Restaurante.objects.all()
 
-	context = {'restaurantes':restaurantes}
+	context = {'nuevos_restaurantes':restaurantes[0:4], 'otros_restaurantes':restaurantes[4:15]}
 	return render(request, "base.html", context)
+
+def verRestaurante(request, rid):
+
+	# obtener los restaurantes
+	restaurante = Restaurante.objects.get(id=rid)
+	# obtener todos los restaurantes
+	restaurantes = Restaurante.objects.all()
+	
+	context = {'restaurante':restaurante, 'nuevos_restaurantes':restaurantes[0:4], 'otros_restaurantes':restaurantes[4:15]}
+
+	return render(request, "app_restaurantes/restaurante.html", context)
+
 
 def login(request):
 
