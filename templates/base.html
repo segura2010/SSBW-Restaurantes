@@ -15,26 +15,30 @@
 	<div class="top-bar">
 		<div class="top-bar-left">
 			<ul class="menu">
-				<li class="menu-text">SSBW - Restaurantes</li>
+				<li class="menu-text"><a href="{% url 'index' %}">SSBW - Restaurantes</a></li>
 				<li><input type="text" placeholder="Buscar.."/></li>
 				<li><a href="#">Buscar</a></li>
 			</ul>
 		</div>
 		<div class="top-bar-right">
 			<ul class="menu">
-				{% if usuario %}
-					<li>Bienvenido {{ usuario }}</li>
-					<li><a href="{% url 'index' %}">Cerrar Sesión</a></li>
+				{% if user.is_authenticated %}
+					<li>Bienvenido {{ user.username }}</li>
+					<li><a href="/accounts/logout">Cerrar Sesión</a></li>
 				{% else %}
-					<li><a href="bienvenido">Registrate</a></li>
-					<li><a href="#" data-toggle="logingModal">Inicia Sesión</a></li>
+					<li><a href="/accounts/register">Registrate</a></li>
+					<li><a href="/accounts/login" data-toggle="_logingModal">Inicia Sesión</a></li>
 				{% endif %}
 			</ul>
 		</div>
 	</div>
 
-	{% block center %}
-	{% endblock %}
+	<div class="row">
+		<div class="medium-6 medium-centered large-4 large-centered columns">
+			{% block center %}
+			{% endblock %}
+		</div>
+	</div>
 
 	<div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
 		<ul class="orbit-container">
@@ -257,13 +261,12 @@
 
 
 	<!-- Login Modal -->
-	<a href="#" data-toggle="logingModal">Click Me For A Modal</a>
 	<div class="reveal" id="logingModal" data-reveal data-close-on-click="true" data-animation-in="spin-in" data-animation-out="spin-out">
 
 		<div class="row">
 			<div class="medium-6 medium-centered large-4 large-centered columns">
 
-				<form action="{% url 'login' %}" method="POST">
+				<form action="/accounts/login" method="POST">
 					<div class="row column log-in-form">
 						<h4 class="text-center">Log in</h4>
 						<label>Email
