@@ -10,6 +10,10 @@
 		<div class="medium-4 columns">
 			<h2>{{ plato.nombre }}</h2>
 			<h5>{{ plato.descripcion }}</h5>
+
+			<br>
+			<i>A <span id="meGustaContador">{{ megustacount }}</span> personas les gusta este plato </i>
+			<button class="button expanded" onclick="meGustaPlato('{{ plato.slug }}', {{ megustacount }})">Me gusta</button>
 		</div>
 
 		<hr>

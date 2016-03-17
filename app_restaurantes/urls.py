@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 	url(r'^addrestaurante', views.addRestaurante, name='addRestaurante'),
 	url(r'^plato/(.*)', views.verPlato, name='verPlato'),
 	url(r'^addplato', views.addPlato, name='addPlato'),
+	url(r'^megustaplato/(.*)', views.meGustaPlato, name='meGustaPlato'),
 	url(r'^login', views.login, name='login'),
 	url(r'^hello', views.helloworld, name='helloworld')
 )

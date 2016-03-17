@@ -28,6 +28,8 @@ class Plato(Document):
 	comentarios	= ListField(StringField(max_length=140))
 	slug 		= StringField()
 
+	megusta		= ListField(StringField(max_length=10))
+
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.nombre)
 		super(Plato, self).save(*args, **kwargs)

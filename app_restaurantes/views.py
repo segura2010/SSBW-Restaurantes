@@ -61,7 +61,11 @@ def verPlato(request, slug):
 	primeros = num_restaurantes-inicial
 	segundos = num_restaurantes-inicial-5
 
-	context = {'plato':plato, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+	if plato.megusta != None:
+		megustas = len(plato.megusta)
+	else:
+		megustas = 0
+	context = {'plato':plato, 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
 
 	return render(request, "app_restaurantes/plato.html", context)
 
@@ -90,6 +94,23 @@ def addPlato(request):
     	form = PlatoForm()
 
     return render(request, 'app_restaurantes/add_plato.html', {'form': form})
+
+
+def meGustaPlato(request, slug):
+
+	plato = Plato.objects(slug=slug)
+	if plato:
+		plato = plato[0]
+
+	usuario = request.user.username
+	is_authenticated = request.user.is_authenticated()
+	print is_authenticated
+	if is_authenticated and not (usuario in plato.megusta):
+		plato.megusta.append(usuario)
+		plato = plato.save()
+		return HttpResponse("OK")
+	else:
+		return HttpResponse("FAIL")
 
 
 def addRestaurante(request):
