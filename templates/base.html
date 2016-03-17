@@ -15,7 +15,10 @@
 	<div class="top-bar">
 		<div class="top-bar-left">
 			<ul class="menu">
-				<li class="menu-text"><a href="{% url 'index' %}">SSBW - Restaurantes</a></li>
+				<li class="menu-text"><a href="{% url 'index' %}">SSBW - Restaurantes | </a></li>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'addRestaurante' %}">Nuevo</a></li>
+				{% endif %}
 				<li><input type="text" placeholder="Buscar.."/></li>
 				<li><a href="#">Buscar</a></li>
 			</ul>
@@ -61,6 +64,7 @@
 	</div>
 	{% endblock %}
 
+	{% block nuevos_restaurantes %}
 	<div class="row column text-center">
 		<h2>Nuevos Restaurantes</h2>
 		<hr>
@@ -83,8 +87,10 @@
 		</div>
 	</div>
 	<hr>
+	{% endblock %}
 
 
+	{% block otros_restaurantes %}
 	<hr>
 	<div class="row column text-center">
 		<h2>Otros Restaurantes</h2>
@@ -101,9 +107,10 @@
 			</div>
 		{% endfor %}
 	</div>
-
 	<hr>
+	{% endblock %}
 
+	<!--
 	<div class="row">
 		<div class="medium-4 columns">
 			<h4>Top Products</h4>
@@ -196,28 +203,14 @@
 			</div>
 		</div>
 	</div>
+	-->
+
 	<div class="callout large secondary">
 		<div class="row">
 			<div class="large-4 columns">
 				<h5>Vivamus Hendrerit Arcu Sed Erat Molestie</h5>
 				<p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit.</p>
 			</div>
-		</div>
-		<div class="large-3 large-offset-2 columns">
-			<ul class="menu vertical">
-				<li><a href="#">One</a></li>
-				<li><a href="#">Two</a></li>
-				<li><a href="#">Three</a></li>
-				<li><a href="#">Four</a></li>
-			</ul>
-		</div>
-		<div class="large-3 columns">
-			<ul class="menu vertical">
-				<li><a href="#">One</a></li>
-				<li><a href="#">Two</a></li>
-				<li><a href="#">Three</a></li>
-				<li><a href="#">Four</a></li>
-			</ul>
 		</div>
 	</div>
 
