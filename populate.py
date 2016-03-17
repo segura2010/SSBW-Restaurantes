@@ -4,10 +4,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Restaurantes.settings')
 import django
 django.setup()
 
-from app_restaurantes.models import Restaurante
+from app_restaurantes.models import Restaurante, Plato
 
 
-def populate():
+def populateRestaurantes():
     
     addRestaurante(nombre="Soy un Restaurante!", direccion="direccion1", email="algo1@algo.com", telefono="958765665")
     addRestaurante(nombre="Restaurante 2", direccion="direccion2", email="algo2@algo.com", telefono="958165665")
@@ -20,6 +20,16 @@ def populate():
 
     # Print out what we have added to the user.
     for r in Restaurante.objects.all():
+        print "- {0} ".format(str(r))
+
+def populatePlatos():
+    p = Plato(nombre="Plato!", descripcion="Soy un plato!!", comentarios=["es bueno!","yo creo que no..","yo soy un comentario!"])
+    p.save()
+    p = Plato(nombre="Otro plato", descripcion="otro plato..", comentarios=["es bueno!","yo creo que no..","yo soy un comentario!"])
+    p.save()
+
+    # Print out what we have added to the user.
+    for r in Plato.objects:
         print "- {0} ".format(str(r))
 
 def addRestaurante(nombre, direccion, email, telefono):
@@ -35,5 +45,6 @@ def addRestaurante(nombre, direccion, email, telefono):
 # Start execution here!
 if __name__ == '__main__':
     print "Starting population script..."
-    populate()
+    #populateRestaurantes()
+    populatePlatos()
 

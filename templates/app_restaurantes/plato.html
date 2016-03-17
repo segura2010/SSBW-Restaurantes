@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+
+{% block primer_contenido %}
+<div class="row">
+	<div class="medium-centered large-6 large-centered columns">
+		<div class="medium-6 columns">
+			<img class="thumbnail" src="http://placehold.it/300x400">
+		</div>
+		<div class="medium-4 columns">
+			<h2>{{ plato.nombre }}</h2>
+			<h5>{{ plato.descripcion }}</h5>
+		</div>
+
+		<hr>
+		<h3>Comentarios: </h3>
+		{% for c in plato.comentarios %}
+			<p>{{ c }}</p>
+		{% endfor %}
+
+	</div>
+</div>
+{% endblock %}

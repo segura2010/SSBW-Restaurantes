@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Para acceder a los objetos de la BD
-from app_restaurantes.models import Restaurante
+from app_restaurantes.models import Restaurante, Plato
 
 # Para usar los formularios
 from app_restaurantes.forms import RestauranteForm
@@ -20,7 +20,10 @@ def index(request):
 	primeros = num_restaurantes-inicial
 	segundos = num_restaurantes-inicial-5
 
-	context = {'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+	# platos
+	platos = Plato.objects #(tags='mongodb').count()
+
+	context = {'platos':platos, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
 	return render(request, "base.html", context)
 
 def verRestaurante(request, rid):
@@ -39,6 +42,26 @@ def verRestaurante(request, rid):
 	context = {'restaurante':restaurante, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
 
 	return render(request, "app_restaurantes/restaurante.html", context)
+
+
+def verPlato(request, slug):
+
+	plato = Plato.objects(slug=slug)
+	if plato:
+		plato = plato[0]
+
+	# obtener todos los restaurantes
+	restaurantes = Restaurante.objects.all()
+	
+	num_restaurantes = len(restaurantes)
+	inicial = 4
+
+	primeros = num_restaurantes-inicial
+	segundos = num_restaurantes-inicial-5
+
+	context = {'plato':plato, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+
+	return render(request, "app_restaurantes/plato.html", context)
 
 
 def addRestaurante(request):
