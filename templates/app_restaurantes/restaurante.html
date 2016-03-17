@@ -1,6 +1,8 @@
 
 {% extends 'base.html' %}
 
+{% load easy_maps_tags %}
+
 {% block primer_contenido %}
 <div class="row">
 		<div class="medium-centered large-6 large-centered columns">
@@ -11,6 +13,8 @@
 				<h1>{{ restaurante.nombre }}</h1>
 				<h5>Direccion: {{ restaurante.direccion }}</h5>
 				<h5>Telefono: {{ restaurante.telefono }}</h5>
+
+				{% easy_map restaurante.direccion 300 400 %}
 			</div>
 		</div>
 	</div>

@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_restaurantes',
-    'registration'
+    'registration',
+    'easy_maps'
 ]
 
 MIDDLEWARE_CLASSES = [
