@@ -1,0 +1,20 @@
+
+{% extends 'base.html' %}
+
+{% block primer_contenido %}
+<div class="row">
+	<div class="medium-centered large-6 large-centered columns">
+		<form action="{% url 'addPlato' %}" method="post">
+		    {% csrf_token %}
+		    {{ form }}
+		    <input type="submit" value="Submit" />
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block nuevos_restaurantes %}
+{% endblock %}
+
+{% block otros_restaurantes %}
+{% endblock %}

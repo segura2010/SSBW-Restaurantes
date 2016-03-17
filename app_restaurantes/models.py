@@ -11,11 +11,11 @@ connect('restaurantes')
 # Create your models here.
 
 class Restaurante(models.Model):
-	nombre 		= models.CharField(max_length=30)
+	nombre 		= models.CharField(max_length=30, unique='True')
 	direccion 	= models.CharField(max_length=60)
 	email     	= models.EmailField()
 	telefono  	= models.CharField(max_length=11)
-	slug		= models.SlugField()
+	slug		= models.SlugField(unique='True')
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.nombre)

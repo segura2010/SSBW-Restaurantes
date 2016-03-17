@@ -17,7 +17,8 @@
 			<ul class="menu">
 				<li class="menu-text"><a href="{% url 'index' %}">SSBW - Restaurantes | </a></li>
 				{% if user.is_authenticated %}
-					<li><a href="{% url 'addRestaurante' %}">Nuevo</a></li>
+					<li><a href="{% url 'addRestaurante' %}">Nuevo Restaurante</a></li>
+					<li><a href="{% url 'addPlato' %}">Nuevo Plato</a></li>
 				{% endif %}
 				<li><input type="text" placeholder="Buscar.."/></li>
 				<li><a href="#">Buscar</a></li>
