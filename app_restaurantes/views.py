@@ -65,7 +65,7 @@ def verPlato(request, slug):
 		megustas = len(plato.megusta)
 	else:
 		megustas = 0
-	context = {'plato':plato, 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+	context = {'plato':plato, 'plato_img': plato.foto.read().encode("base64"), 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
 
 	return render(request, "app_restaurantes/plato.html", context)
 
@@ -74,7 +74,7 @@ def addPlato(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
 		# create a form instance and populate it with data from the request:
-		form = PlatoForm(request.POST)
+		form = PlatoForm(request.POST, request.FILES)
 		# check whether it's valid:
 		if form.is_valid():
 			# process the data in form.cleaned_data as required
@@ -84,8 +84,13 @@ def addPlato(request):
 			nombre = form.cleaned_data["nombre"]
 			descripcion = form.cleaned_data["descripcion"]
 
+			#foto = form.files.get('foto')
+			foto = form.cleaned_data["file"]
+			print "Foto: ", foto.name
+
 			# Creamos y guardamos el plato con los datos
 			nuevo_plato = Plato(nombre=nombre, descripcion=descripcion)
+			nuevo_plato.foto.put(foto, content_type = 'image/jpeg') # put photo
 			nuevo_plato = nuevo_plato.save()
 			return HttpResponseRedirect('plato/'+str(slugify(nombre)))
 

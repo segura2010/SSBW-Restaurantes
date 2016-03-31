@@ -30,6 +30,8 @@ class Plato(Document):
 
 	megusta		= ListField(StringField(max_length=10))
 
+	foto 		= FileField()
+
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.nombre)
 		super(Plato, self).save(*args, **kwargs)
