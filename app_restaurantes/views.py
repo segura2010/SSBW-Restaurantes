@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
+from django.contrib.auth.models import User
+
 # Para acceder a los objetos de la BD
 from app_restaurantes.models import Restaurante, Plato
 
@@ -8,6 +10,10 @@ from app_restaurantes.models import Restaurante, Plato
 from app_restaurantes.forms import RestauranteForm, PlatoForm
 
 from django.template.defaultfilters import slugify
+
+from rest_framework import routers, serializers, viewsets, generics
+
+from app_restaurantes.serializers import RestauranteSerializer, UserSerializer
 
 # Create your views here.
 
@@ -147,3 +153,26 @@ def login(request):
 def helloworld(request):
 
 	return HttpResponse("Hello world!")
+
+
+
+## REST
+
+class RestauranteViewSet(viewsets.ModelViewSet):
+    queryset = Restaurante.objects.all()
+    serializer_class = RestauranteSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+'''
+
+class PlatoViewSet(generics.ListCreateAPIView):
+    serializer_class = PlatoSerializer
+    def get_queryset(self):
+        return Plato.objects
+
+'''
