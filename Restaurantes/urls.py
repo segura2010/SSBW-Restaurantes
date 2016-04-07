@@ -22,14 +22,14 @@ from app_restaurantes import views
 
 from rest_framework import routers, serializers, viewsets, generics
 
-from app_restaurantes.serializers import RestauranteSerializer, UserSerializer
+from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, PlatoSerializer
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'restaurantes', views.RestauranteViewSet)
-#router.register(r'platos', PlatoViewSet)
+#router.register(r'platos', views.PlatoViewSet)
 
 
 urlpatterns = [

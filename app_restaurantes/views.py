@@ -12,8 +12,12 @@ from app_restaurantes.forms import RestauranteForm, PlatoForm
 from django.template.defaultfilters import slugify
 
 from rest_framework import routers, serializers, viewsets, generics
+from rest_framework.decorators import api_view, throttle_classes, permission_classes
+from rest_framework.throttling import UserRateThrottle
+from rest_framework.response import Response
 
-from app_restaurantes.serializers import RestauranteSerializer, UserSerializer
+
+from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, PlatoSerializer
 
 # Create your views here.
 
@@ -155,6 +159,59 @@ def helloworld(request):
 	return HttpResponse("Hello world!")
 
 
+# Antiguo
+@api_view(['GET'])
+#@permission_classes((permissions.AllowAny,))
+def api_restaurantes(request):
+
+	if request.method == "GET":
+
+		restaurantes = Restaurante.objects.all()
+
+		result = RestauranteSerializer(restaurantes, many=True)
+
+		return Response(result.data)
+
+
+@api_view(['GET'])
+#@permission_classes((permissions.AllowAny,))
+def api_restaurante(request, slug):
+
+	if request.method == "GET":
+
+		restaurante = Restaurante.objects.filter(slug=slug)[0]
+
+		result = RestauranteSerializer(restaurante)
+
+		return Response(result.data)
+
+
+@api_view(['GET'])
+#@permission_classes((permissions.AllowAny,))
+def api_platos(request):
+
+	if request.method == "GET":
+
+		platos = Plato.objects()
+
+		result = PlatoSerializer(platos, many="True")
+
+		return Response(result.data)
+
+
+@api_view(['GET'])
+#@permission_classes((permissions.AllowAny,))
+def api_plato(request, slug):
+
+	if request.method == "GET":
+
+		plato = Plato.objects(slug=slug)[0]
+
+		result = PlatoSerializer(plato)
+
+		return Response(result.data)
+
+
 
 ## REST
 
@@ -167,12 +224,11 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
 '''
-
 class PlatoViewSet(generics.ListCreateAPIView):
-    serializer_class = PlatoSerializer
-    def get_queryset(self):
-        return Plato.objects
-
+	platos = Plato.objects
+	plato = PlatoHelper(platos[0].nombre, platos[0].descripcion)
+	queryset = plato
+	
+	serializer_class = PlatoSerializer
 '''

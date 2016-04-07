@@ -11,6 +11,10 @@ urlpatterns = patterns('',
 	url(r'^addplato', views.addPlato, name='addPlato'),
 	url(r'^megustaplato/(.*)', views.meGustaPlato, name='meGustaPlato'),
 	url(r'^login', views.login, name='login'),
-	url(r'^hello', views.helloworld, name='helloworld')
+	url(r'^hello', views.helloworld, name='helloworld'),
+	url(r'^api/restaurantes$', views.api_restaurantes, name='api_restaurantes'),
+	url(r'^api/restaurante/([\w\-]+)/', views.api_restaurante, name='api_restaurante'),
+	url(r'^api/platos$', views.api_platos, name='api_platos'),
+	url(r'^api/plato/([\w\-]+)/', views.api_plato, name='api_plato'),
 )
 
