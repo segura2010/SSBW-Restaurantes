@@ -75,7 +75,11 @@ def verPlato(request, slug):
 		megustas = len(plato.megusta)
 	else:
 		megustas = 0
-	context = {'plato':plato, 'plato_img': plato.foto.read().encode("base64"), 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+
+	foto = plato.foto.read()
+	if foto:
+		foto = foto.encode("base64")
+	context = {'plato':plato, 'plato_img': foto, 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
 
 	return render(request, "app_restaurantes/plato.html", context)
 

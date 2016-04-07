@@ -25,3 +25,5 @@ class PlatoSerializer(serializers.Serializer):
     nombre = serializers.CharField()
     descripcion = serializers.CharField()
     slug = serializers.CharField()
+    comentarios = serializers.ListField(serializers.CharField())
+    #foto = serializers.CharField()
