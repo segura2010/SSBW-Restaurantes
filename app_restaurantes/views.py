@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Logs
 import logging
-logger = logging.getLogger("ViewsLogger")
+logger = logging.getLogger("Views.py")
 
 from django.contrib.auth.models import User
 
@@ -26,6 +26,8 @@ from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, 
 # Create your views here.
 
 def index(request):
+
+	logger.debug("Hola!")
 
 	# obtener los restaurantes
 	restaurantes = Restaurante.objects.all()
@@ -183,10 +185,11 @@ def api_restaurantes(request):
 	elif request.method == "POST":
 		restauranteSerial = RestauranteSerializer(data=request.data)
 		if restauranteSerial.is_valid():
+			logger.debug("Nuevo Restaurante!")
 			#restaurante = Restaurante(nombre="", direccion="", email="", telefono="")
 			restauranteSerial.save()
 		else:
-			#print restauranteSerial.errors
+			logger.error(restauranteSerial.errors)
 			return Response(restauranteSerial.errors)
 
 		return Response(restauranteSerial.data)
