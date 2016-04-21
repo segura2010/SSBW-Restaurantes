@@ -19,6 +19,7 @@ from rest_framework import routers, serializers, viewsets, generics
 from rest_framework.decorators import api_view, throttle_classes, permission_classes
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 
 
 from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, PlatoSerializer
@@ -195,24 +196,31 @@ def api_restaurantes(request):
 		return Response(restauranteSerial.data)
 
 
-@api_view(['GET', 'DELETE'])
+@api_view(['GET', 'DELETE', 'PUT'])
 #@permission_classes((permissions.AllowAny,))
 def api_restaurante(request, slug):
 
+	restaurante = Restaurante.objects.filter(slug=slug)
+	if len(restaurante) > 0:
+		restaurante = restaurante[0]
+	else:
+		return Response("[]")
+
 	if request.method == "GET":
-
-		restaurante = Restaurante.objects.filter(slug=slug)
-		if len(restaurante) > 0:
-			restaurante = restaurante[0]
-		else:
-			return Response("[]")
-
 		result = RestauranteSerializer(restaurante)
 
 		return Response(result.data)
 	elif request.method == "DELETE":
-		restaurante = Restaurante.objects.filter(slug=slug)[0]
 		restaurante.delete()
+
+		return Response('{"result":"success"}')
+
+	elif request.method == "PUT":
+		print "PUT!!!"
+		jsonRequest = JSONParser().parse(request.data)
+		print request.data
+		restaurante.direccion = jsonRequest["direccion"]
+		restaurante.save()
 
 		return Response('{"result":"success"}')
 

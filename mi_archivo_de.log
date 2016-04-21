@@ -1,0 +1,21 @@
+[21/Apr/2016 16:55:02] ERROR [django.request:284] Internal Server Error: /resta/api/restaurante/ok/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Library/Python/2.7/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/Library/Python/2.7/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Library/Python/2.7/site-packages/rest_framework/decorators.py", line 53, in handler
+    return func(*args, **kwargs)
+  File "/Users/alberto/Desktop/Universidad/Master/2 Cuatrimestre/SSIW/Practicas/WebRestaurantes/restaurantes/Restaurantes/app_restaurantes/views.py", line 220, in api_restaurante
+    jsonRequest = JSONParser().parse(request.data)
+  File "/Library/Python/2.7/site-packages/rest_framework/parsers.py", line 66, in parse
+    data = stream.read().decode(encoding)
+AttributeError: 'dict' object has no attribute 'read'
