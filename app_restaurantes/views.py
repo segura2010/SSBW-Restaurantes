@@ -177,7 +177,7 @@ def api_restaurantes(request):
 		return Response(result.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'DELETE'])
 #@permission_classes((permissions.AllowAny,))
 def api_restaurante(request, slug):
 
@@ -188,6 +188,12 @@ def api_restaurante(request, slug):
 		result = RestauranteSerializer(restaurante)
 
 		return Response(result.data)
+
+	elif request.method == "DELETE":
+		restaurante = Restaurante.objects.filter(slug=slug)[0]
+		restaurante.delete()
+
+		return Response('{"result":"success"}')
 
 
 @api_view(['GET'])
@@ -203,7 +209,8 @@ def api_platos(request):
 		return Response(result.data)
 
 
-@api_view(['GET'])
+
+@api_view(['GET', 'DELETE'])
 #@permission_classes((permissions.AllowAny,))
 def api_plato(request, slug):
 
@@ -214,6 +221,12 @@ def api_plato(request, slug):
 		result = PlatoSerializer(plato)
 
 		return Response(result.data)
+
+	elif request.method == "DELETE":
+		plato = Plato.objects(slug=slug)[0]
+		plato.delete()
+
+		return Response('{"result":"success"}')
 
 
 
