@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
+# Logs
+import logging
+logger = logging.getLogger("ViewsLogger")
+
 from django.contrib.auth.models import User
 
 # Para acceder a los objetos de la BD
@@ -164,7 +168,7 @@ def helloworld(request):
 
 
 # Antiguo
-@api_view(['GET'])
+@api_view(['GET','POST'])
 #@permission_classes((permissions.AllowAny,))
 def api_restaurantes(request):
 
@@ -176,6 +180,17 @@ def api_restaurantes(request):
 
 		return Response(result.data)
 
+	elif request.method == "POST":
+		restauranteSerial = RestauranteSerializer(data=request.data)
+		if restauranteSerial.is_valid():
+			#restaurante = Restaurante(nombre="", direccion="", email="", telefono="")
+			restauranteSerial.save()
+		else:
+			#print restauranteSerial.errors
+			return Response(restauranteSerial.errors)
+
+		return Response(restauranteSerial.data)
+
 
 @api_view(['GET', 'DELETE'])
 #@permission_classes((permissions.AllowAny,))
@@ -183,12 +198,15 @@ def api_restaurante(request, slug):
 
 	if request.method == "GET":
 
-		restaurante = Restaurante.objects.filter(slug=slug)[0]
+		restaurante = Restaurante.objects.filter(slug=slug)
+		if len(restaurante) > 0:
+			restaurante = restaurante[0]
+		else:
+			return Response("[]")
 
 		result = RestauranteSerializer(restaurante)
 
 		return Response(result.data)
-
 	elif request.method == "DELETE":
 		restaurante = Restaurante.objects.filter(slug=slug)[0]
 		restaurante.delete()
@@ -216,7 +234,11 @@ def api_plato(request, slug):
 
 	if request.method == "GET":
 
-		plato = Plato.objects(slug=slug)[0]
+		plato = Plato.objects(slug=slug)
+		if len(plato) > 0:
+			plato = plato[0]
+		else:
+			return Response("[]")
 
 		result = PlatoSerializer(plato)
 
