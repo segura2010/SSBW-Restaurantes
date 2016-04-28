@@ -1,21 +1,31 @@
-[21/Apr/2016 16:55:02] ERROR [django.request:284] Internal Server Error: /resta/api/restaurante/ok/
+[28/Apr/2016 14:39:27] ERROR [django.request:284] Internal Server Error: /resta/ng-test/
 Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 174, in get_response
     response = self.process_exception_by_middleware(e, request)
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/rest_framework/views.py", line 466, in dispatch
-    response = self.handle_exception(exc)
-  File "/Library/Python/2.7/site-packages/rest_framework/views.py", line 463, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/rest_framework/decorators.py", line 53, in handler
-    return func(*args, **kwargs)
-  File "/Users/alberto/Desktop/Universidad/Master/2 Cuatrimestre/SSIW/Practicas/WebRestaurantes/restaurantes/Restaurantes/app_restaurantes/views.py", line 220, in api_restaurante
-    jsonRequest = JSONParser().parse(request.data)
-  File "/Library/Python/2.7/site-packages/rest_framework/parsers.py", line 66, in parse
-    data = stream.read().decode(encoding)
-AttributeError: 'dict' object has no attribute 'read'
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 172, in get_response
+    response = response.render()
+  File "/Library/Python/2.7/site-packages/django/template/response.py", line 160, in render
+    self.content = self.rendered_content
+  File "/Library/Python/2.7/site-packages/django/template/response.py", line 135, in rendered_content
+    template = self._resolve_template(self.template_name)
+  File "/Library/Python/2.7/site-packages/django/template/response.py", line 90, in _resolve_template
+    new_template = self.resolve_template(template)
+  File "/Library/Python/2.7/site-packages/django/template/response.py", line 80, in resolve_template
+    return select_template(template, using=self.using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 62, in select_template
+    return engine.get_template(template_name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 40, in get_template
+    return Template(self.engine.get_template(template_name, dirs), self)
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 190, in get_template
+    template, origin = self.find_template(template_name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 157, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "/Library/Python/2.7/site-packages/django/template/loaders/base.py", line 46, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 189, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 231, in compile_nodelist
+    return parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 487, in parse
+    raise self.error(token, e)
+TemplateSyntaxError: Could not parse some characters: qty| * cost| | currency

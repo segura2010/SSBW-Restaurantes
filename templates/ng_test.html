@@ -1,0 +1,85 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>SSBW - Restaurantes</title>
+	<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+	<script src="{% static 'js/angular.min.js' %}"></script>
+
+	<script type="text/javascript">
+		var myApp = angular.module('myApp',[]);
+
+
+		// Controllers
+		myApp.controller('MyController', ['$scope', function($scope) {
+			$scope.greeting = 'Hi!';
+			$scope.double = function(k){ return k*2; };
+			$scope.putPi = function(){ $scope.number=3.14; };
+		}]);
+
+		myApp.controller('Restaurants', function($scope, $http) {
+			$http.get("/resta/api/restaurantes?format=json").then(function(response) {
+			      $scope.restaurants = response.data;
+			}, function(e){
+				// error
+				alert("Error!");
+			});
+		});
+
+
+	</script>
+
+</head>
+<body ng-app="myApp">
+
+	{% verbatim %}
+	<div ng-app ng-init="esto=Nada">
+		<input ng-model="esto"/>
+		<br>
+		Esto = <i>{{ esto }}</i>
+	</div>
+
+	<div ng-init="qty=1;cost=2">
+	  <b>Invoice:</b>
+	  <div>
+	    Quantity: <input type="number" min="0" ng-model="qty">
+	  </div>
+	  <div>
+	    Costs: <input type="number" min="0" ng-model="cost">
+	  </div>
+	  <div>
+	    <b>Total:</b> {{qty * cost | currency}}
+	  </div>
+	</div>
+
+
+	<div ng-controller="MyController" ng-init="number=2">
+		<div>
+	    	Quantity: <input type="number" min="0" ng-model="number">
+	    	{{ double(number) }}
+	  	</div>
+	  	<button ng-click="putPi()">Pi</button>
+	</div>
+
+
+	<div ng-controller="Restaurants">
+		<b>Restaurantes: </b>
+		<table>
+			<tr>
+				<td><b>Nombre</b></td> <td><b>Dirección</b></td> <td><b>Teléfono</b></td>
+		  	</tr>
+			<tr ng-repeat="r in restaurants">
+				<td>{{ r.nombre }}</td> <td>{{ r.direccion }}</td> <td>({{ r.telefono }})</td>
+		  	</tr>
+	  	</table>
+	</div>
+
+	{% endverbatim %}
+
+</body>
+</html>
