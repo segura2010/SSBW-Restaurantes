@@ -20,6 +20,7 @@ from rest_framework.decorators import api_view, throttle_classes, permission_cla
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
 
 
 from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, PlatoSerializer
@@ -27,8 +28,6 @@ from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, 
 # Create your views here.
 
 def index(request):
-
-	logger.debug("Hola!")
 
 	# obtener los restaurantes
 	restaurantes = Restaurante.objects.all()
@@ -172,6 +171,7 @@ def helloworld(request):
 
 # Antiguo
 @api_view(['GET','POST'])
+@csrf_exempt
 #@permission_classes((permissions.AllowAny,))
 def api_restaurantes(request):
 
@@ -197,6 +197,7 @@ def api_restaurantes(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
+@csrf_exempt
 #@permission_classes((permissions.AllowAny,))
 def api_restaurante(request, slug):
 
@@ -226,6 +227,7 @@ def api_restaurante(request, slug):
 
 
 @api_view(['GET'])
+@csrf_exempt
 #@permission_classes((permissions.AllowAny,))
 def api_platos(request):
 
@@ -240,6 +242,7 @@ def api_platos(request):
 
 
 @api_view(['GET', 'DELETE'])
+@csrf_exempt
 #@permission_classes((permissions.AllowAny,))
 def api_plato(request, slug):
 

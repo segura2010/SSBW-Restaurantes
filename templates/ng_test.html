@@ -29,6 +29,49 @@
 				// error
 				alert("Error!");
 			});
+			$scope.getRestaurants = function(){
+				$http.get("/resta/api/restaurantes?format=json").then(function(response) {
+			      $scope.restaurants = response.data;
+				}, function(e){
+					// error
+					alert("Error!");
+				});
+			};
+			$scope.deleteRestaurant = function(slug){
+				$http.delete("/resta/api/restaurante/"+ slug).then(function(response) {
+					alert("Eliminado!");
+					$scope.getRestaurants();
+				}, function(e){
+					// error
+					alert("Error!");
+				});
+			};
+			$scope.addRestaurant = function(slug){
+				var data = { 
+					"nombre": $scope.newName,
+			        "direccion": $scope.newDirection,
+			        "email": $scope.newEmail,
+			        "telefono": $scope.newPhone,
+			        "slug": "it-doesnt-matter"
+				};
+				$http.post("/resta/api/restaurantes", data).then(function(response) {
+					if(response.data.nombre != $scope.newName)
+					{
+						return alert("Error! " + JSON.stringify(response.data));
+					}
+					// Clean data
+					$scope.newName = "";
+					$scope.newEmail = "";
+					$scope.newDirection = "";
+					$scope.newPhone = "";
+
+					alert("Añadido!");
+					$scope.getRestaurants();
+				}, function(e){
+					// error
+					alert("Error!");
+				});
+			};
 		});
 
 
@@ -71,10 +114,21 @@
 		<b>Restaurantes: </b>
 		<table>
 			<tr>
-				<td><b>Nombre</b></td> <td><b>Dirección</b></td> <td><b>Teléfono</b></td>
+				<td><b>Nombre</b></td> <td><b>Dirección</b></td> <td><b>Teléfono</b></td> <td><b>Email</b></td>
+		  	</tr>
+		  	<tr>
+				<td><input type="text" ng-model="newName" placeholder="Nombre"></td>
+				<td><input type="text" ng-model="newDirection" placeholder="Direccion"></td>
+				<td><input type="text" ng-model="newPhone" placeholder="Teléfono"></td>
+				<td><input type="email" ng-model="newEmail" placeholder="Email"></td>
+				<td ng-click="addRestaurant()"><a href="#!">Añadir</a></td>
 		  	</tr>
 			<tr ng-repeat="r in restaurants">
-				<td>{{ r.nombre }}</td> <td>{{ r.direccion }}</td> <td>({{ r.telefono }})</td>
+				<td>{{ r.nombre }}</td>
+				<td>{{ r.direccion }}</td>
+				<td>{{ r.telefono }}</td>
+				<td>{{ r.email }}</td>
+				<td ng-click="deleteRestaurant(r.slug)"><a href="#!">Eliminar</a></td>
 		  	</tr>
 	  	</table>
 	</div>
