@@ -1,12 +1,9 @@
-[28/Apr/2016 16:00:12] ERROR [Views.py:193] {'email': [u'Introduzca una direcci\xf3n de correo electr\xf3nico v\xe1lida.']}
-[28/Apr/2016 16:01:22] ERROR [Views.py:193] {'telefono': [u'Aseg\xfarese de que este campo no tenga m\xe1s de 11 caracteres.']}
-[28/Apr/2016 16:01:30] ERROR [Views.py:193] {'telefono': [u'Aseg\xfarese de que este campo no tenga m\xe1s de 11 caracteres.']}
-[28/Apr/2016 16:01:55] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.']}
-[28/Apr/2016 16:03:16] ERROR [Views.py:193] {'email': [u'Este campo es requerido.']}
-[28/Apr/2016 16:03:27] ERROR [Views.py:193] {'email': [u'Este campo es requerido.']}
-[28/Apr/2016 16:03:52] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.']}
-[28/Apr/2016 16:04:00] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.']}
-[28/Apr/2016 16:04:12] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.']}
-[28/Apr/2016 16:05:32] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.'], 'email': [u'Este campo es requerido.']}
-[28/Apr/2016 16:06:10] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.'], 'email': [u'Este campo es requerido.']}
-[28/Apr/2016 16:07:44] ERROR [Views.py:193] {'nombre': [u'Ya existe Restaurante con este nombre.']}
+[28/Apr/2016 16:41:36] ERROR [django.request:284] Internal Server Error: /resta/api/restaurante/undefined
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 235, in get_response
+    response = middleware_method(request, response)
+  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 115, in process_response
+    return self.response_redirect_class(self.get_full_path_with_slash(request))
+  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 99, in get_full_path_with_slash
+    'url': request.get_host() + new_path,
+RuntimeError: You called this URL via PUT, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining PUT data. Change your form to point to localhost:8000/resta/api/restaurante/undefined/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.

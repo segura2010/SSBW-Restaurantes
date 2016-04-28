@@ -72,6 +72,41 @@
 					alert("Error!");
 				});
 			};
+			$scope.editRestaurant = function(slug){
+				var data = { 
+					"nombre": $scope.newName,
+			        "direccion": $scope.newDirection,
+			        "email": $scope.newEmail,
+			        "telefono": $scope.newPhone,
+			        "slug": "it-doesnt-matter"
+				};
+				$http.put("/resta/api/restaurante/"+ slug, data).then(function(response) {
+					if(response.data.nombre != $scope.newName)
+					{
+						return alert("Error! " + JSON.stringify(response.data));
+					}
+					// Clean data
+					$scope.newName = "";
+					$scope.newEmail = "";
+					$scope.newDirection = "";
+					$scope.newPhone = "";
+
+					alert("Editado!");
+					$scope.getRestaurants();
+				}, function(e){
+					// error
+					alert("Error!");
+				});
+			};
+			$scope.showEditRestaurant = function(slug, name, dir, telf, email){
+				$scope.editSlug = slug;
+				$scope.newName = name;
+				$scope.newEmail = email;
+				$scope.newDirection = dir;
+				$scope.newPhone = telf;
+
+				$("#editBtn").show();
+			};
 		});
 
 
@@ -122,18 +157,28 @@
 				<td><input type="text" ng-model="newPhone" placeholder="Teléfono"></td>
 				<td><input type="email" ng-model="newEmail" placeholder="Email"></td>
 				<td ng-click="addRestaurant()"><a href="#!">Añadir</a></td>
+				<td ng-click="editRestaurant()" style="display:none" id="editBtn"><a href="#!">Guardar</a><input type="hidden" ng-model="editSlug" value="{{ editSlug }}"></td>
 		  	</tr>
 			<tr ng-repeat="r in restaurants">
 				<td>{{ r.nombre }}</td>
 				<td>{{ r.direccion }}</td>
 				<td>{{ r.telefono }}</td>
 				<td>{{ r.email }}</td>
-				<td ng-click="deleteRestaurant(r.slug)"><a href="#!">Eliminar</a></td>
+				<td><a href="#!" data-toggle="editRestaurantModal" ng-click="showEditRestaurant(r.slug)">Editar</a></td>
+				<td ng-click="deleteRestaurant(r.slug, r.nombre, r.direccion, r.telefono, r.email)"><a href="#!">Eliminar</a></td>
 		  	</tr>
 	  	</table>
+
 	</div>
 
 	{% endverbatim %}
+
+	<script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+	<script src="{% static 'js/foundation.min.js' %}"></script>
+	<script src="{% static 'js/app.js' %}"></script>
+	<script>
+	$(document).foundation();
+	</script>
 
 </body>
 </html>
