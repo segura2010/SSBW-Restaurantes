@@ -153,13 +153,16 @@
 			<tr>
 				<td><b>Nombre</b></td> <td><b>Dirección</b></td> <td><b>Teléfono</b></td> <td><b>Email</b></td>
 		  	</tr>
-		  	<tr>
-				<td><input type="text" ng-model="newName" placeholder="Nombre"></td>
-				<td><input type="text" ng-model="newDirection" placeholder="Direccion"></td>
-				<td><input type="text" ng-model="newPhone" placeholder="Teléfono"></td>
-				<td><input type="email" ng-model="newEmail" placeholder="Email"></td>
-				<td ng-click="addRestaurant()"><a href="#!" class="button success">Añadir</a></td>
-				<td ng-click="editRestaurant()" style="display:none" id="editBtn"><a href="#!" class="button secondary">Guardar</a><input type="hidden" ng-model="editSlug" value="{{ editSlug }}"></td>
+		  	<tr ng-form name="myform">
+				<td><input type="text" ng-model="newName" placeholder="Nombre" required></td>
+				<td><input type="text" ng-model="newDirection" placeholder="Direccion" required></td>
+				<td><input type="text" ng-model="newPhone" placeholder="Teléfono" required></td>
+				<td><input type="email" name="email" ng-model="newEmail" placeholder="Email" required></td>
+				<td><button ng-click="addRestaurant()" class="button success" ng-disabled="!myform.$valid">Añadir</button></td>
+				<td style="display:none" id="editBtn"><button ng-click="editRestaurant()" class="button secondary" ng-disabled="!myform.$valid">Guardar</button><input type="hidden" ng-model="editSlug" value="{{ editSlug }}"></td>
+				
+				<!--<pre>{{ myform.$valid | json }}</pre>-->
+				
 		  	</tr>
 			<tr ng-repeat="r in restaurants">
 				<td>{{ r.nombre }}</td>
