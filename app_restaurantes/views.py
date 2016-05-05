@@ -217,10 +217,12 @@ def api_restaurante(request, slug):
 		return Response('{"result":"success"}')
 
 	elif request.method == "PUT":
-		print "PUT!!!"
-		jsonRequest = JSONParser().parse(request.data)
-		print request.data
+		jsonRequest = request.data
+		print jsonRequest
+		restaurante.nombre = jsonRequest["nombre"]
 		restaurante.direccion = jsonRequest["direccion"]
+		restaurante.email = jsonRequest["email"]
+		restaurante.telefono = jsonRequest["telefono"]
 		restaurante.save()
 
 		return Response('{"result":"success"}')

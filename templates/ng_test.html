@@ -27,23 +27,23 @@
 			      $scope.restaurants = response.data;
 			}, function(e){
 				// error
-				alert("Error!");
+				showMessage("Error!", "alert");
 			});
 			$scope.getRestaurants = function(){
 				$http.get("/resta/api/restaurantes?format=json").then(function(response) {
 			      $scope.restaurants = response.data;
 				}, function(e){
 					// error
-					alert("Error!");
+					showMessage("Error!", "alert");
 				});
 			};
 			$scope.deleteRestaurant = function(slug){
 				$http.delete("/resta/api/restaurante/"+ slug).then(function(response) {
-					alert("Eliminado!");
+					showMessage("Eliminado!", "success");
 					$scope.getRestaurants();
 				}, function(e){
 					// error
-					alert("Error!");
+					showMessage("Error!", "alert");
 				});
 			};
 			$scope.addRestaurant = function(slug){
@@ -57,7 +57,7 @@
 				$http.post("/resta/api/restaurantes", data).then(function(response) {
 					if(response.data.nombre != $scope.newName)
 					{
-						return alert("Error! " + JSON.stringify(response.data));
+						return showMessage("Error! " + JSON.stringify(response.data), "alert");
 					}
 					// Clean data
 					$scope.newName = "";
@@ -65,14 +65,15 @@
 					$scope.newDirection = "";
 					$scope.newPhone = "";
 
-					alert("Añadido!");
-					$scope.getRestaurants();
+					showMessage("Añadido!", "success");
+					$scope.restaurants.push(data);
 				}, function(e){
 					// error
-					alert("Error!");
+					showMessage("Error!", "alert");
 				});
 			};
-			$scope.editRestaurant = function(slug){
+			$scope.editRestaurant = function(){
+				var slug = $scope.editSlug;
 				var data = { 
 					"nombre": $scope.newName,
 			        "direccion": $scope.newDirection,
@@ -80,23 +81,20 @@
 			        "telefono": $scope.newPhone,
 			        "slug": "it-doesnt-matter"
 				};
-				$http.put("/resta/api/restaurante/"+ slug, data).then(function(response) {
-					if(response.data.nombre != $scope.newName)
-					{
-						return alert("Error! " + JSON.stringify(response.data));
-					}
+				$http.put("/resta/api/restaurante/"+ $scope.editSlug +"/", data).then(function(response) {
 					// Clean data
 					$scope.newName = "";
 					$scope.newEmail = "";
 					$scope.newDirection = "";
 					$scope.newPhone = "";
 
-					alert("Editado!");
+					showMessage("Editado!", "success");
 					$scope.getRestaurants();
 				}, function(e){
 					// error
-					alert("Error!");
+					showMessage("Error!", "alert");
 				});
+				$("#editBtn").hide();
 			};
 			$scope.showEditRestaurant = function(slug, name, dir, telf, email){
 				$scope.editSlug = slug;
@@ -116,6 +114,8 @@
 <body ng-app="myApp">
 
 	{% verbatim %}
+
+	<!--
 	<div ng-app ng-init="esto=Nada">
 		<input ng-model="esto"/>
 		<br>
@@ -143,10 +143,12 @@
 	  	</div>
 	  	<button ng-click="putPi()">Pi</button>
 	</div>
+	-->
 
-
-	<div ng-controller="Restaurants">
-		<b>Restaurantes: </b>
+	<div id="alerts" style="position:fixed;top:3px;right:5px;width:230px;"></div>
+	
+	<div ng-controller="Restaurants" ng-init="restaurants=[]">
+		<h1>Restaurantes ({{ restaurants.length }}): </h1>
 		<table>
 			<tr>
 				<td><b>Nombre</b></td> <td><b>Dirección</b></td> <td><b>Teléfono</b></td> <td><b>Email</b></td>
@@ -156,16 +158,16 @@
 				<td><input type="text" ng-model="newDirection" placeholder="Direccion"></td>
 				<td><input type="text" ng-model="newPhone" placeholder="Teléfono"></td>
 				<td><input type="email" ng-model="newEmail" placeholder="Email"></td>
-				<td ng-click="addRestaurant()"><a href="#!">Añadir</a></td>
-				<td ng-click="editRestaurant()" style="display:none" id="editBtn"><a href="#!">Guardar</a><input type="hidden" ng-model="editSlug" value="{{ editSlug }}"></td>
+				<td ng-click="addRestaurant()"><a href="#!" class="button success">Añadir</a></td>
+				<td ng-click="editRestaurant()" style="display:none" id="editBtn"><a href="#!" class="button secondary">Guardar</a><input type="hidden" ng-model="editSlug" value="{{ editSlug }}"></td>
 		  	</tr>
 			<tr ng-repeat="r in restaurants">
 				<td>{{ r.nombre }}</td>
 				<td>{{ r.direccion }}</td>
 				<td>{{ r.telefono }}</td>
 				<td>{{ r.email }}</td>
-				<td><a href="#!" data-toggle="editRestaurantModal" ng-click="showEditRestaurant(r.slug)">Editar</a></td>
-				<td ng-click="deleteRestaurant(r.slug, r.nombre, r.direccion, r.telefono, r.email)"><a href="#!">Eliminar</a></td>
+				<td><a href="#!" data-toggle="editRestaurantModal" ng-click="showEditRestaurant(r.slug, r.nombre, r.direccion, r.telefono, r.email)" class="button">Editar</a></td>
+				<td ng-click="deleteRestaurant(r.slug, r.nombre, r.direccion, r.telefono, r.email)"><a href="#!" class="button alert">Eliminar</a></td>
 		  	</tr>
 	  	</table>
 
@@ -178,6 +180,10 @@
 	<script src="{% static 'js/app.js' %}"></script>
 	<script>
 	$(document).foundation();
+	function showMessage(message, type) {
+	    $("#alerts").append('<div class="'+type+' callout" data-closable="slide-out-right">'+message+'<button class="close-button" aria-label="Dismiss alert" type="button" data-close><span aria-hidden="true">&times;</span></button></div>');
+	    $(document).foundation();
+	}
 	</script>
 
 </body>
