@@ -23,9 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^fn&g)r4-q#t(!k46wou8i=fg!c6@hy@@1hlfzs@fatvclby8s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 
 
 STATIC_URL = '/static/'
@@ -200,4 +199,6 @@ LOGGING = {
         },
     }
 }
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "Restaurantes.settings"
 
