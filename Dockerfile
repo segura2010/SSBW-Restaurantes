@@ -31,7 +31,7 @@ run easy_install -U pip
 add . ${project_dir}
 workdir $project_dir
 
-run pip install -r requeriments.txt
+run pip install -r requirements.txt
 
 
 # PRODUCCION
