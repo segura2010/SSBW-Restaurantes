@@ -1,10 +1,13 @@
 #/bin/bash
 cp -r static/ /var/www/static
-#cp -r media/ /var/www/media
+#ln -r media/ /var/www/media
 
 
 # Inicia MongoDB
 /usr/bin/mongod &
+
+# Inicia nginx
+service nginx start
 
 # Pobla BD
 /usr/bin/python populate.py

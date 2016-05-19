@@ -30,18 +30,15 @@ from app_restaurantes.serializers import RestauranteSerializer, UserSerializer, 
 def index(request):
 
 	# obtener los restaurantes
-	restaurantes = Restaurante.objects.all()
+	restaurantes = Restaurante.objects.all().reverse()
 
 	num_restaurantes = len(restaurantes)
 	inicial = 4
 
-	primeros = num_restaurantes-inicial
-	segundos = num_restaurantes-inicial-5
-
 	# platos
 	platos = Plato.objects #(tags='mongodb').count()
 
-	context = {'platos':platos, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+	context = {'platos':platos, 'nuevos_restaurantes':restaurantes[0:inicial], 'otros_restaurantes':restaurantes[inicial:num_restaurantes]}
 	return render(request, "base.html", context)
 
 def verRestaurante(request, rid):
@@ -49,15 +46,15 @@ def verRestaurante(request, rid):
 	# obtener los restaurantes
 	restaurante = Restaurante.objects.get(id=rid)
 	# obtener todos los restaurantes
-	restaurantes = Restaurante.objects.all()
+	restaurantes = Restaurante.objects.all().reverse()
 	
 	num_restaurantes = len(restaurantes)
 	inicial = 4
 
-	primeros = num_restaurantes-inicial
-	segundos = num_restaurantes-inicial-5
+	# platos
+	platos = Plato.objects
 
-	context = {'restaurante':restaurante, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+	context = {'platos':platos, 'restaurante':restaurante, 'nuevos_restaurantes':restaurantes[0:inicial], 'otros_restaurantes':restaurantes[inicial:num_restaurantes]}
 
 	return render(request, "app_restaurantes/restaurante.html", context)
 
@@ -69,13 +66,13 @@ def verPlato(request, slug):
 		plato = plato[0]
 
 	# obtener todos los restaurantes
-	restaurantes = Restaurante.objects.all()
+	restaurantes = Restaurante.objects.all().reverse()
 	
 	num_restaurantes = len(restaurantes)
 	inicial = 4
 
-	primeros = num_restaurantes-inicial
-	segundos = num_restaurantes-inicial-5
+	# platos
+	platos = Plato.objects
 
 	if plato.megusta != None:
 		megustas = len(plato.megusta)
@@ -85,7 +82,7 @@ def verPlato(request, slug):
 	foto = plato.foto.read()
 	if foto:
 		foto = foto.encode("base64")
-	context = {'plato':plato, 'plato_img': foto, 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[primeros:num_restaurantes], 'otros_restaurantes':restaurantes[segundos:primeros]}
+	context = {'platos':platos, 'plato':plato, 'plato_img': foto, 'megustacount':megustas, 'nuevos_restaurantes':restaurantes[0:inicial], 'otros_restaurantes':restaurantes[inicial:num_restaurantes]}
 
 	return render(request, "app_restaurantes/plato.html", context)
 
