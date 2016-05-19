@@ -51,5 +51,8 @@ expose 80
 # permiso de ejecucion
 RUN chmod +x despliegue/collect_static.sh
 
+RUN mkdir /data
+RUN mkdir /data/db
+
 cmd despliegue/collect_static.sh
 # && supervisord -c despliegue/supervisor.conf
